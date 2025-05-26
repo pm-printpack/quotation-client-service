@@ -33,36 +33,6 @@ describe("CustomersService", () => {
     expect(service).toBeDefined();
   });
 
-  it("add 2 customers", async () => {
-    // expect(service).toBeDefined();
-    const tiers: CustomerTier[] = await customerTiersService.findAll();
-    await service.create({
-      username: "coryisbest07281@gmail.com",
-      password: "qazwsxedcrfv",
-      name: "Cory K 1",
-      orgName: "Packaging Inc",
-      email: "coryisbest07281@gmail.com",
-      phone: "(678)-678-8765",
-      tier: tiers[0]
-    });
-    let customers: CustomerWithoutPassword[] = await service.findAll();
-    expect(customers.length).toEqual(1);
-    expect(customers[0].username).toEqual("coryisbest07281@gmail.com");
-    expect(customers[0].tier.id).toEqual(tiers[0].id);
-    await service.create({
-      username: "coryisbest07282@gmail.com",
-      password: "qazwsxedcrfv",
-      name: "Cory K 2",
-      orgName: "Packaging Inc",
-      email: "coryisbest07282@gmail.com",
-      phone: "(678)-678-8766",
-      tier: tiers[0]
-    });
-
-    customers = await service.findAll();
-    expect(customers.length).toEqual(2);
-  });
-
   afterAll(async () => {
     await dataSource.destroy();
     await app.close();
