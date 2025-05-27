@@ -2,11 +2,11 @@ import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ConfigModule } from "@nestjs/config";
-// import { AdminsModule } from "./admins/admins.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AuthModule } from "./auth/auth.module";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import { CategoriesModule } from "./categories/categories.module";
 
 @Module({
   imports: [
@@ -48,7 +48,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
       }
     }),
     AuthModule,
-    // AdminsModule
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
