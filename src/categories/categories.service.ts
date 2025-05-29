@@ -26,7 +26,11 @@ export class CategoriesService {
   ) {}
 
   findAllCategoryProductSubcategories(): Promise<CategoryProductSubcategory[]> {
-    return this.categoryProductSubcategoryRepository.find();
+    return this.categoryProductSubcategoryRepository.find({
+      order: {
+        id: "ASC"
+      }
+    });
   }
 
   findCategoryProductSubcategoryByName(name: string): Promise<CategoryProductSubcategory | null> {
@@ -34,11 +38,18 @@ export class CategoriesService {
   }
 
   findAllCategoryPrintingTypes(): Promise<CategoryPrintingType[]> {
-    return this.categoryPrintingTypeRepository.find();
+    return this.categoryPrintingTypeRepository.find({
+      order: {
+        id: "ASC"
+      }
+    });
   }
 
   async findCategoryOptions(categoryProductSubcategoryId: number, categoryPrintingTypeId: number): Promise<CategoryOption[]> {
     return (await this.categoryProductSubcategoryAndOptionMappingRepository.find({
+      order: {
+        id: "ASC"
+      },
       where: {
         categoryProductSubcategoryId: categoryProductSubcategoryId,
         categoryPrintingTypeId: categoryPrintingTypeId
@@ -53,6 +64,9 @@ export class CategoriesService {
 
   async findCategorySuboptions(categoryProductSubcategoryId: number, categoryPrintingTypeId: number, categoryOptionId: number): Promise<CategorySuboption[]> {
     return (await this.categoryAllMappingRepository.find({
+      order: {
+        id: "ASC"
+      },
       where: {
         categoryProductSubcategoryId: categoryProductSubcategoryId,
         categoryPrintingTypeId: categoryPrintingTypeId,
@@ -60,5 +74,28 @@ export class CategoriesService {
       },
       relations: ["categorySuboption"]
     })).map((mapping: CategoryAllMapping) => mapping.categorySuboption);
+  }
+
+  async findAllCategorySuboptions(categoryProductSubcategoryId: number, categoryPrintingTypeId: number): Promise<Record<number, CategorySuboption[]>> {
+    const allMappings: CategoryAllMapping[] = await this.categoryAllMappingRepository.find({
+      order: {
+        id: "ASC"
+      },
+      where: {
+        categoryProductSubcategoryId: categoryProductSubcategoryId,
+        categoryPrintingTypeId: categoryPrintingTypeId,
+      },
+      relations: ["categoryOption", "categorySuboption"]
+    });
+
+    const suboptionsRecord: Record<number, CategorySuboption[]> = {};
+    for (const mapping of allMappings) {
+      const optionId = mapping.categoryOptionId;
+      if (!suboptionsRecord[optionId]) {
+        suboptionsRecord[optionId] = [];
+      }
+      suboptionsRecord[optionId].push(mapping.categorySuboption);
+    }
+    return suboptionsRecord;
   }
 }

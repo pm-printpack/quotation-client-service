@@ -3,6 +3,7 @@ import { CategoriesService } from "./categories.service";
 import { CategoriesController } from "./categories.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { CategoryAllMapping, CategoryOption, CategoryPrintingType, CategoryProductSubcategory, CategoryProductSubcategoryAndOptionMapping, CategorySuboption } from "../entities/category.entity";
+import { MaterialsModule } from "../materials/materials.module";
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { CategoryAllMapping, CategoryOption, CategoryPrintingType, CategoryProdu
       CategorySuboption,
       CategoryAllMapping,
       CategoryProductSubcategoryAndOptionMapping
-    ])
+    ]),
+    MaterialsModule
   ],
   controllers: [CategoriesController],
   providers: [CategoriesService],

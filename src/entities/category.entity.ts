@@ -30,17 +30,10 @@ export class CategoryPrintingType extends Category {}
 })
 export class CategoryOption extends Category {
   @Column({
-    name: "number_of_duplicate",
-    type: "int",
-    default: 1
-  })
-  numOfDuplicate: number;
-
-  @Column({
     type: "boolean",
     default: false
   })
-  isDynamic: boolean;
+  isMaterial: boolean;
 }
 
 @Entity({

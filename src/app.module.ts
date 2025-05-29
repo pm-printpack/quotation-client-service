@@ -7,6 +7,7 @@ import { AuthModule } from "./auth/auth.module";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { CategoriesModule } from "./categories/categories.module";
+import { MaterialsModule } from "./materials/materials.module";
 
 @Module({
   imports: [
@@ -48,7 +49,8 @@ import { CategoriesModule } from "./categories/categories.module";
       }
     }),
     AuthModule,
-    CategoriesModule
+    CategoriesModule,
+    MaterialsModule
   ],
   controllers: [AppController],
   providers: [AppService],
