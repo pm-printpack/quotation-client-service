@@ -11,10 +11,10 @@ export class MaterialsController {
   //   await this.materialsService.create(createMaterialDto);
   // }
 
-  @Get()
-  async findAll(): Promise<QueryMaterialDto[]> {
-    return await this.materialsService.findAll();
-  }
+  // @Get()
+  // async findAll(): Promise<QueryMaterialDto[]> {
+  //   return await this.materialsService.findAll();
+  // }
 
   @Get(":id")
   async findOne(@Param("id", ParseIntPipe) id: number) {

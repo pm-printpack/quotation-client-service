@@ -22,23 +22,6 @@ export class MaterialsService {
     return this.materialRepository.find();
   }
 
-  async findAll(): Promise<QueryMaterialDto[]> {
-    const queryMaterialDto: QueryMaterialDto[] = [];
-    const materials: Material[] = await this.materialRepository.find({
-      order: {
-        id: "ASC"
-      }
-    });
-    const MaterialDisplayMatrix: MaterialDisplay[][] = await Promise.all(materials.map(({id}) => this.findMaterialDisplaysByMaterialId(id)));
-    for (let i: number = 0; i < materials.length; ++i) {
-      queryMaterialDto[i] = {
-        ...materials[i],
-        displays: MaterialDisplayMatrix[i]
-      };
-    }
-    return queryMaterialDto;
-  }
-
   findOne(id: number): Promise<Material | null> {
     return this.materialRepository.findOneBy({id});
   }
@@ -50,7 +33,7 @@ export class MaterialsService {
     });
   }
 
-  async findAllMaterialByCategoryPrintingType(categoryPrintingTypeId: number): Promise<Record<number, Material[]>> {
+  async findAllMaterialByCategoryPrintingType(categoryPrintingTypeId: number): Promise<Record<number, Material[][]>> {
     const displays = await this.materialDisplayRepository.find({
       order: {
         id: "ASC"
@@ -62,13 +45,20 @@ export class MaterialsService {
       relations: ["material"]
     });
 
-    const displaysRecord: Record<number, Material[]> = {};
+    // { [optionId]: [Material[], Material[], Material[], ...] }
+    const materialsRecord: Record<number, Material[][]> = {};
     for (const d of displays) {
-      if (!displaysRecord[d.categoryOptionId]) {
-        displaysRecord[d.categoryOptionId] = [];
+      if (!materialsRecord[d.categoryOptionId]) {
+        materialsRecord[d.categoryOptionId] = [];
       }
-      displaysRecord[d.categoryOptionId].push(d.material);
+      if (!materialsRecord[d.categoryOptionId][d.index]) {
+        materialsRecord[d.categoryOptionId][d.index] = [];
+      }
+      materialsRecord[d.categoryOptionId][d.index].push({
+        ...d.material,
+        displays: [d]
+      });
     }
-    return displaysRecord;
+    return materialsRecord;
   }
 }

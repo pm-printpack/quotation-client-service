@@ -88,6 +88,7 @@ export class CategoriesService {
       relations: ["categoryOption", "categorySuboption"]
     });
 
+    // { [optionId]: [CategorySuboption, CategorySuboption, CategorySuboption, ...] }
     const suboptionsRecord: Record<number, CategorySuboption[]> = {};
     for (const mapping of allMappings) {
       const optionId = mapping.categoryOptionId;

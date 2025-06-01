@@ -29,13 +29,13 @@ export class CategoriesController {
     @Param("categoryPrintingTypeId", ParseIntPipe) categoryPrintingTypeId: number
   ): Promise<QueryCategoryOptionDto[]> {
     const categoryOptions: CategoryOption[] = await this.categoriesService.findCategoryOptions(categoryProductSubcategoryId, categoryPrintingTypeId);
-    const displaysRecord: Record<number, Material[]> = await this.materialService.findAllMaterialByCategoryPrintingType(categoryPrintingTypeId);
+    const displaysRecord: Record<number, Material[][]> = await this.materialService.findAllMaterialByCategoryPrintingType(categoryPrintingTypeId);
     const suboptionsRecord: Record<number, CategorySuboption[]> = await this.categoriesService.findAllCategorySuboptions(categoryProductSubcategoryId, categoryPrintingTypeId);
     return categoryOptions.map((option: CategoryOption) => {
       if (option.isMaterial) {
         return {
           ...option,
-          suboptions: displaysRecord[option.id] || []
+          suboptions: displaysRecord[option.id] || [[]]
         };
       } else {
         return {

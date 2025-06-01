@@ -1,9 +1,6 @@
-export class QueryCategorySuboptionDto {
-  id: number;
-  name: string;
-}
+import { QueryMaterialDto } from "src/materials/dto/query-material.dto";
 
-export class QueryMaterialDto {
+export class QueryCategorySuboptionDto {
   id: number;
   name: string;
 }
@@ -11,5 +8,5 @@ export class QueryMaterialDto {
 export class QueryCategoryOptionDto {
   id: number;
   name: string;
-  suboptions:  QueryCategorySuboptionDto | QueryMaterialDto[];
+  suboptions:  QueryCategorySuboptionDto[] | QueryMaterialDto[][];
 }
