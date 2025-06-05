@@ -1,16 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { CategoryOption, CategoryPrintingType } from "./category.entity";
+import { CategoryOption, CategoryPrintingType, UnitPriceConfigurableCategory } from "./category.entity";
 
 @Entity()
-export class Material {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({
-    nullable: false
-  })
-  @Unique(["name"])
-  name: string;
+export class Material extends UnitPriceConfigurableCategory {
 
   @Column({
     nullable: false
@@ -24,6 +16,7 @@ export class Material {
    */
   @Column({
     type: "decimal",
+    precision: 10,
     scale: 2,
     nullable: false
   })
@@ -35,33 +28,17 @@ export class Material {
    */
   @Column({
     type: "decimal",
+    precision: 10,
     scale: 2,
     nullable: false
   })
   thickness: number;
-
-  /**
-   * Unit price by weight of material
-   * Unit is RMB/kg
-   */
-  @Column({
-    type: "decimal",
-    scale: 2,
-    nullable: false
-  })
-  unitPrice: number;
 
   @Column("text")
   remarks: string;
 
   @OneToMany(type => MaterialDisplay, (display: MaterialDisplay) => display.material)
   displays: MaterialDisplay[];
-
-  @Column({
-    type: "timestamp",
-    default: () => "CURRENT_TIMESTAMP"
-  })
-  createdAt: Date;
 }
 
 @Entity()

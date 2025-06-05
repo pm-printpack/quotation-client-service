@@ -27,6 +27,7 @@ export class CustomerTier {
 
   @Column({
     type: "decimal",
+    precision: 10,
     scale: 2
   })
   minimumDiscountAmount1: number;
@@ -38,6 +39,7 @@ export class CustomerTier {
 
   @Column({
     type: "decimal",
+    precision: 10,
     scale: 2
   })
   minimumDiscountAmount2: number;

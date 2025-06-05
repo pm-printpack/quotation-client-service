@@ -71,10 +71,23 @@ export class CategoryProductSubcategoryAndOptionMapping {
   categoryOption: CategoryOption;
 }
 
+export class UnitPriceConfigurableCategory extends Category {
+  /**
+   * Unit price of this category
+   */
+  @Column({
+    type: "decimal",
+    precision: 10,
+    scale: 2,
+    nullable: false
+  })
+  unitPrice: number;
+}
+
 @Entity({
   name: "category_suboption"
 })
-export class CategorySuboption extends Category {}
+export class CategorySuboption extends UnitPriceConfigurableCategory {}
 
 @Entity({
   name: "category_all_mapping"
