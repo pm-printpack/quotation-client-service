@@ -9,6 +9,12 @@ class Category{
   name: string;
 
   @Column({
+    nullable: false
+  })
+  @Unique(["chineseName"])
+  chineseName: string;
+
+  @Column({
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP"
   })

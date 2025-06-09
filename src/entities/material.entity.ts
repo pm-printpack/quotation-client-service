@@ -3,13 +3,6 @@ import { CategoryOption, CategoryPrintingType, UnitPriceConfigurableCategory } f
 
 @Entity()
 export class Material extends UnitPriceConfigurableCategory {
-
-  @Column({
-    nullable: false
-  })
-  @Unique(["chineseName"])
-  chineseName: string;
-
   /**
    * Density of material
    * Unit is g/cm³
