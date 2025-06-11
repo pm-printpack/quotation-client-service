@@ -24,7 +24,13 @@ class Category{
 @Entity({
   name: "category_product_subcategory"
 })
-export class CategoryProductSubcategory extends Category {}
+export class CategoryProductSubcategory extends Category {
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  hasGusset: boolean;
+}
 
 @Entity({
   name: "category_printing_type"
