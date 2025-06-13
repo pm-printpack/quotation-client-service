@@ -54,10 +54,12 @@ export class MaterialsService {
       if (!materialsRecord[d.categoryOptionId][d.index]) {
         materialsRecord[d.categoryOptionId][d.index] = [];
       }
-      materialsRecord[d.categoryOptionId][d.index].push({
-        ...d.material,
-        displays: [d]
-      });
+      if (!materialsRecord[d.categoryOptionId][d.index].find(({id}) => id === d.material.id)) { // remove duplicated materials in the same index
+        materialsRecord[d.categoryOptionId][d.index].push({
+          ...d.material,
+          displays: [d]
+        });
+      }
     }
     return materialsRecord;
   }
