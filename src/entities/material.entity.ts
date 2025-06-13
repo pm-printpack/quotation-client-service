@@ -10,7 +10,7 @@ export class Material extends UnitPriceConfigurableCategory {
   @Column({
     type: "decimal",
     precision: 10,
-    scale: 2,
+    scale: 3,
     nullable: false
   })
   density: number;
