@@ -18,10 +18,22 @@ export class QueryMaterialDto {
   thickness: number;
 
   /**
-   * Unit price by weight of material
-   * Unit is RMB/kg
+   * Unit Price per Square Meter
+   * CNY/m²
    */
-  unitPrice: number;
+  unitPricePerSquareMeter: number;
+
+  /**
+   * Unit Price per Kelogram
+   * CNY/kg
+   */
+  unitPricePerKg: number;
+
+  /**
+   * Weight per square centimeter of material
+   * The unit is g/cm²
+   */
+  weightPerCm2: number;
 
   remarks?: string;
 

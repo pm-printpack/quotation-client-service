@@ -4,7 +4,12 @@ export class QueryCategorySuboptionDto {
   id: number;
   name: string;
   chineseName: string;
-  unitPrice: number;
+
+  /**
+   * Unit Price per Square Meter
+   * CNY/m²
+   */
+  unitPricePerSquareMeter: number;
 }
 
 export class QueryCategoryOptionDto {

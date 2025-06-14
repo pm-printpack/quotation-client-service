@@ -3,6 +3,19 @@ import { CategoryOption, CategoryPrintingType, UnitPriceConfigurableCategory } f
 
 @Entity()
 export class Material extends UnitPriceConfigurableCategory {
+
+  /**
+   * Unit Price per Kelogram
+   * CNY/kg
+   */
+  @Column({
+    type: "decimal",
+    precision: 10,
+    scale: 2,
+    nullable: false
+  })
+  unitPricePerKg: number;
+
   /**
    * Density of material
    * Unit is g/cm³
@@ -14,6 +27,18 @@ export class Material extends UnitPriceConfigurableCategory {
     nullable: false
   })
   density: number;
+
+  /**
+   * Weight per square centimeter of material
+   * The unit is g/cm²
+   */
+  @Column({
+    type: "decimal",
+    precision: 10,
+    scale: 3,
+    nullable: false
+  })
+  weightPerCm2: number;
 
   /**
    * Thickness of material

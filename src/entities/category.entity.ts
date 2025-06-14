@@ -85,7 +85,8 @@ export class CategoryProductSubcategoryAndOptionMapping {
 
 export class UnitPriceConfigurableCategory extends Category {
   /**
-   * Unit price of this category
+   * Unit Price per Square Meter
+   * CNY/m²
    */
   @Column({
     type: "decimal",
@@ -93,7 +94,7 @@ export class UnitPriceConfigurableCategory extends Category {
     scale: 2,
     nullable: false
   })
-  unitPrice: number;
+  unitPricePerSquareMeter: number;
 }
 
 @Entity({
