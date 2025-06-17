@@ -91,7 +91,7 @@ export class UnitPriceConfigurableCategory extends Category {
   @Column({
     type: "decimal",
     precision: 10,
-    scale: 2,
+    scale: 4,
     nullable: false
   })
   unitPricePerSquareMeter: number;

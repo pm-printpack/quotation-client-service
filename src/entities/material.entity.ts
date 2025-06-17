@@ -11,7 +11,7 @@ export class Material extends UnitPriceConfigurableCategory {
   @Column({
     type: "decimal",
     precision: 10,
-    scale: 2,
+    scale: 4,
     nullable: false
   })
   unitPricePerKg: number;
@@ -23,7 +23,7 @@ export class Material extends UnitPriceConfigurableCategory {
   @Column({
     type: "decimal",
     precision: 10,
-    scale: 3,
+    scale: 4,
     nullable: false
   })
   density: number;
@@ -34,8 +34,8 @@ export class Material extends UnitPriceConfigurableCategory {
    */
   @Column({
     type: "decimal",
-    precision: 10,
-    scale: 3,
+    precision: 12,
+    scale: 6,
     nullable: false
   })
   weightPerCm2: number;
