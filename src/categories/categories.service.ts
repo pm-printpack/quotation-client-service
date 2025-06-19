@@ -27,6 +27,9 @@ export class CategoriesService {
 
   findAllCategoryProductSubcategories(): Promise<CategoryProductSubcategory[]> {
     return this.categoryProductSubcategoryRepository.find({
+      where: {
+        isVisible: true
+      },
       order: {
         id: "ASC"
       }

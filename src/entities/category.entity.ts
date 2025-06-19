@@ -30,6 +30,12 @@ export class CategoryProductSubcategory extends Category {
     default: false
   })
   hasGusset: boolean;
+
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  isVisible: boolean;
 }
 
 @Entity({
