@@ -14,4 +14,8 @@ export class CustomersService {
   async findByUsername(username: string): Promise<Customer | null> {
     return this.customerRepository.findOneBy({username});
   }
+
+  async findOne(id: number): Promise<Customer | null> {
+    return this.customerRepository.findOneBy({id});
+  }
 }
