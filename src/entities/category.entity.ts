@@ -1,10 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { QuotationHistory } from "./quotation-history.entity";
 
 class Category{
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    nullable: false
+  })
   @Unique(["name"])
   name: string;
 
@@ -36,12 +39,54 @@ export class CategoryProductSubcategory extends Category {
     default: false
   })
   isVisible: boolean;
+
+  @OneToMany(() => CategoryProductSubcategoryAndCategoryPrintingTypeMapping, mapping => mapping.categoryProductSubcategory)
+  printingTypeMappings: CategoryProductSubcategoryAndCategoryPrintingTypeMapping[];
+
+  @OneToMany(() => QuotationHistory, quotationHistory => quotationHistory.categoryProductSubcategory)
+  quotationHistories: QuotationHistory[];
 }
 
 @Entity({
   name: "category_printing_type"
 })
-export class CategoryPrintingType extends Category {}
+export class CategoryPrintingType extends Category {
+  @OneToMany(() => CategoryProductSubcategoryAndCategoryPrintingTypeMapping, mapping => mapping.categoryPrintingType)
+  productSubcategoryMappings: CategoryProductSubcategoryAndCategoryPrintingTypeMapping[];
+
+  @OneToMany(() => QuotationHistory, quotationHistory => quotationHistory.categoryPrintingType)
+  quotationHistories: QuotationHistory[];
+}
+
+@Entity({
+  name: "category_product_subcategory_and_category_printing_type_mapping"
+})
+export class CategoryProductSubcategoryAndCategoryPrintingTypeMapping {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column({
+    name: "category_product_subcategory_id"
+  })
+  categoryProductSubcategoryId: number;
+
+  @ManyToOne(() => CategoryProductSubcategory, categoryProductSubcategory => categoryProductSubcategory.printingTypeMappings)
+  categoryProductSubcategory: CategoryProductSubcategory;
+
+  @Column({
+    name: "category_printing_type_id"
+  })
+  categoryPrintingTypeId: number;
+
+  @ManyToOne(() => CategoryPrintingType, categoryPrintingType => categoryPrintingType.productSubcategoryMappings, {eager: true})
+  categoryPrintingType: CategoryPrintingType;
+
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  isVisible: boolean;
+}
 
 @Entity({
   name: "category_option"
@@ -52,6 +97,12 @@ export class CategoryOption extends Category {
     default: false
   })
   isMaterial: boolean;
+
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  isRequired: boolean;
 }
 
 @Entity({
@@ -66,7 +117,7 @@ export class CategoryProductSubcategoryAndOptionMapping {
   })
   categoryProductSubcategoryId: number;
 
-  @ManyToOne(type => CategoryProductSubcategory)
+  @ManyToOne(() => CategoryProductSubcategory)
   @JoinColumn({ name: "category_product_subcategory_id" })
   categoryProductSubcategory: CategoryProductSubcategory;
 
@@ -75,7 +126,7 @@ export class CategoryProductSubcategoryAndOptionMapping {
   })
   categoryPrintingTypeId: number;
 
-  @ManyToOne(type => CategoryPrintingType)
+  @ManyToOne(() => CategoryPrintingType)
   @JoinColumn({ name: "category_printing_type_id" })
   categoryPrintingType: CategoryPrintingType;
 
@@ -84,12 +135,12 @@ export class CategoryProductSubcategoryAndOptionMapping {
   })
   categoryOptionId: number;
 
-  @ManyToOne(type => CategoryOption)
+  @ManyToOne(() => CategoryOption)
   @JoinColumn({ name: "category_option_id" })
   categoryOption: CategoryOption;
 }
 
-export class UnitPriceConfigurableCategory extends Category {
+export class UnitAreaPriceConfigurableCategory extends Category {
   /**
    * Unit Price per Square Meter
    * CNY/m²
@@ -106,7 +157,10 @@ export class UnitPriceConfigurableCategory extends Category {
 @Entity({
   name: "category_suboption"
 })
-export class CategorySuboption extends UnitPriceConfigurableCategory {}
+export class CategorySuboption extends UnitAreaPriceConfigurableCategory {
+  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.categorySuboptions)
+  quotationHistories: QuotationHistory[];
+}
 
 @Entity({
   name: "category_all_mapping"
@@ -120,7 +174,7 @@ export class CategoryAllMapping {
   })
   categoryProductSubcategoryId: number;
 
-  @ManyToOne(type => CategoryProductSubcategory)
+  @ManyToOne(() => CategoryProductSubcategory)
   @JoinColumn({ name: "category_product_subcategory_id" })
   categoryProductSubcategory: CategoryProductSubcategory;
 
@@ -129,7 +183,7 @@ export class CategoryAllMapping {
   })
   categoryPrintingTypeId: number;
 
-  @ManyToOne(type => CategoryPrintingType)
+  @ManyToOne(() => CategoryPrintingType)
   @JoinColumn({ name: "category_printing_type_id" })
   categoryPrintingType: CategoryPrintingType;
 
@@ -138,7 +192,7 @@ export class CategoryAllMapping {
   })
   categoryOptionId: number;
 
-  @ManyToOne(type => CategoryOption)
+  @ManyToOne(() => CategoryOption)
   @JoinColumn({ name: "category_option_id" })
   categoryOption: CategoryOption;
 
@@ -147,7 +201,7 @@ export class CategoryAllMapping {
   })
   categorySuboptionId: number;
 
-  @ManyToOne(type => CategorySuboption)
+  @ManyToOne(() => CategorySuboption)
   @JoinColumn({ name: "category_suboption_id" })
   categorySuboption: CategorySuboption;
 }

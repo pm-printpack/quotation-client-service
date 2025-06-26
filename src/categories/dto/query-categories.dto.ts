@@ -1,4 +1,4 @@
-import { QueryMaterialDto } from "src/materials/dto/query-material.dto";
+import { QueryMaterialDto } from "../../materials/dto/query-material.dto";
 
 export class QueryCategorySuboptionDto {
   id: number;

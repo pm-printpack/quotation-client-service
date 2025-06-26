@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { CategoryAllMapping, CategoryOption, CategoryPrintingType, CategoryProductSubcategory, CategoryProductSubcategoryAndOptionMapping, CategorySuboption } from "../entities/category.entity";
+import { CategoryAllMapping, CategoryOption, CategoryPrintingType, CategoryProductSubcategory, CategoryProductSubcategoryAndCategoryPrintingTypeMapping, CategoryProductSubcategoryAndOptionMapping, CategorySuboption } from "../entities/category.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -20,6 +20,9 @@ export class CategoriesService {
 
     @InjectRepository(CategoryAllMapping)
     private categoryAllMappingRepository: Repository<CategoryAllMapping>,
+
+    @InjectRepository(CategoryProductSubcategoryAndCategoryPrintingTypeMapping)
+    private categoryProductSubcategoryAndCategoryPrintingTypeMappingRepository: Repository<CategoryProductSubcategoryAndCategoryPrintingTypeMapping>,
 
     @InjectRepository(CategoryProductSubcategoryAndOptionMapping)
     private categoryProductSubcategoryAndOptionMappingRepository: Repository<CategoryProductSubcategoryAndOptionMapping>
@@ -46,6 +49,19 @@ export class CategoriesService {
         id: "ASC"
       }
     });
+  }
+
+  async findCategoryPrintingTypesByCategoryProductSubcategory(categoryProductSubcategoryId: number): Promise<CategoryPrintingType[]> {
+    const mappings: CategoryProductSubcategoryAndCategoryPrintingTypeMapping[] = await this.categoryProductSubcategoryAndCategoryPrintingTypeMappingRepository.find({
+      where: {
+        categoryProductSubcategoryId: categoryProductSubcategoryId,
+        isVisible: true
+      },
+      order: {
+        categoryPrintingTypeId: "ASC"
+      }
+    });
+    return mappings.map(({categoryPrintingType}) => categoryPrintingType);
   }
 
   async findCategoryOptions(categoryProductSubcategoryId: number, categoryPrintingTypeId: number): Promise<CategoryOption[]> {

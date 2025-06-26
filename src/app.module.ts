@@ -9,6 +9,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { CategoriesModule } from "./categories/categories.module";
 import { MaterialsModule } from "./materials/materials.module";
 import { ExchangeRatesModule } from "./exchange-rates/exchange-rates.module";
+import { QuotationHistoriesModule } from './quotation-histories/quotation-histories.module';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { ExchangeRatesModule } from "./exchange-rates/exchange-rates.module";
       ],
       autoLoadEntities: process.env.DATABASE_AUTO_LOAD_ENTITIES === "true",
       synchronize: process.env.DATABASE_SYNCHRONIZE === "true",
-      dropSchema: process.env.DATABASE_SYNCHRONIZE === "true",
+      dropSchema: process.env.DATABASE_DROP_SCHEMA === "true",
       poolSize: Number(process.env.DATABASE_POOL_MAX) || 10,
       logging: process.env.NODE_ENV === "development",
       namingStrategy: new SnakeNamingStrategy(),
@@ -52,7 +53,8 @@ import { ExchangeRatesModule } from "./exchange-rates/exchange-rates.module";
     AuthModule,
     CategoriesModule,
     MaterialsModule,
-    ExchangeRatesModule
+    ExchangeRatesModule,
+    QuotationHistoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
-import { CategoryOption, CategoryPrintingType, UnitPriceConfigurableCategory } from "./category.entity";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { CategoryOption, CategoryPrintingType, UnitAreaPriceConfigurableCategory } from "./category.entity";
+import { QuotationHistory } from "./quotation-history.entity";
 
 @Entity()
-export class Material extends UnitPriceConfigurableCategory {
+export class Material extends UnitAreaPriceConfigurableCategory {
 
   /**
    * Unit Price per Kelogram
@@ -18,7 +19,7 @@ export class Material extends UnitPriceConfigurableCategory {
 
   /**
    * Density of material
-   * Unit is g/cm³
+   * The unit is g/cm³
    */
   @Column({
     type: "decimal",
@@ -42,7 +43,7 @@ export class Material extends UnitPriceConfigurableCategory {
 
   /**
    * Thickness of material
-   * Unit is μm
+   * The unit is μm
    */
   @Column({
     type: "decimal",
@@ -55,8 +56,11 @@ export class Material extends UnitPriceConfigurableCategory {
   @Column("text")
   remarks: string;
 
-  @OneToMany(type => MaterialDisplay, (display: MaterialDisplay) => display.material)
+  @OneToMany(() => MaterialDisplay, (display: MaterialDisplay) => display.material)
   displays: MaterialDisplay[];
+
+  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.materials)
+  quotationHistories: QuotationHistory[];
 }
 
 @Entity()
@@ -78,7 +82,7 @@ export class MaterialDisplay {
   })
   categoryOptionId: number;
 
-  @ManyToOne(type => CategoryOption)
+  @ManyToOne(() => CategoryOption)
   @JoinColumn({ name: "category_option_id" })
   categoryOption: CategoryOption;
 
@@ -87,7 +91,7 @@ export class MaterialDisplay {
   })
   materialId: number;
 
-  @ManyToOne(type => Material)
+  @ManyToOne(() => Material)
   @JoinColumn({ name: "material_id" })
   material: Material;
 

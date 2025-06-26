@@ -1,16 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { Material, MaterialDisplay } from "../entities/material.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Repository } from "typeorm";
-import { CategoryOption, CategoryPrintingType } from "src/entities/category.entity";
-import { QueryMaterialDto } from "./dto/query-material.dto";
-import { QueryMaterialDisplayDto } from "./dto/query-material-display.dto";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class MaterialsService {
   constructor(
-    private dataSource: DataSource,
-
     @InjectRepository(Material)
     private materialRepository: Repository<Material>,
 

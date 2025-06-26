@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { CustomerTier } from "./customer-tier.entity";
+import { QuotationHistory } from "./quotation-history.entity";
 
 export class CustomerWithoutPassword {
   @PrimaryGeneratedColumn()
@@ -23,6 +24,9 @@ export class CustomerWithoutPassword {
 
   @ManyToOne(type => CustomerTier, customerTier => customerTier.customers, {eager: true})
   tier: CustomerTier;
+
+  @OneToMany(type => QuotationHistory, quotationHistory => quotationHistory.customer)
+  quotationHistories: QuotationHistory[];
 
   @Column({
     type: "timestamp",

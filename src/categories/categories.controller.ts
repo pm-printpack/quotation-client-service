@@ -3,8 +3,7 @@ import { CategoriesService } from "./categories.service";
 import { CategoryOption, CategoryPrintingType, CategoryProductSubcategory, CategorySuboption } from "../entities/category.entity";
 import { QueryCategoryOptionDto } from "./dto/query-categories.dto";
 import { MaterialsService } from "../materials/materials.service";
-import { QueryMaterialDisplayDto } from "src/materials/dto/query-material-display.dto";
-import { Material, MaterialDisplay } from "src/entities/material.entity";
+import { Material } from "../entities/material.entity";
 
 @Controller("categories")
 export class CategoriesController {
@@ -18,9 +17,9 @@ export class CategoriesController {
     return this.categoriesService.findAllCategoryProductSubcategories();
   }
 
-  @Get("printing-types")
-  findAllPrintingTypes(): Promise<CategoryPrintingType[]> {
-    return this.categoriesService.findAllCategoryPrintingTypes();
+  @Get("printing-types/:categoryProductSubcategoryId")
+  findAllPrintingTypes(@Param("categoryProductSubcategoryId", ParseIntPipe) categoryProductSubcategoryId: number): Promise<CategoryPrintingType[]> {
+    return this.categoriesService.findCategoryPrintingTypesByCategoryProductSubcategory(categoryProductSubcategoryId);
   }
 
   @Get("options/:categoryProductSubcategoryId/:categoryPrintingTypeId")
