@@ -7,42 +7,32 @@ class DigitalPrintingQuotationHistory {
   /**
    * 印刷宽度（mm）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  printingWidth: number;
+  @Column()
+  printingWidth: string;
 
   /**
    * 横向印刷数
    */
   @Column()
-  horizontalLayoutCount: number;
+  horizontalLayoutCount: string;
 
   /**
    * 每印袋数
    */
   @Column()
-  numOfBagsPerImpression: number;
+  numOfBagsPerImpression: string;
 
   /**
    * 印刷长度（m）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  printingLength: number;
+  @Column()
+  printingLength: string;
 
   /**
    * 印数
    */
   @Column()
-  printingQuantity: number;
+  printingQuantity: string;
 }
 
 class OffsetPrintingQuotationHistory {
@@ -50,120 +40,75 @@ class OffsetPrintingQuotationHistory {
    * 匹配模数
    */
   @Column()
-  numOfMatchedModulus: number;
+  numOfMatchedModulus: string;
 
   /**
    * 匹配周长
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  matchedPerimeter: number;
+  @Column()
+  matchedPerimeter: string;
 
   /**
    * 倍数
    */
   @Column()
-  multiple: number;
+  multiple: string;
 
   /**
    * 印刷用SKU数
    */
   @Column()
-  numOfSKUs4Printing: number;
+  numOfSKUs4Printing: string;
 
   /**
    * 材料宽度（mm）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  materialWidth: number;
+  @Column()
+  materialWidth: string;
 
   /**
    * 印刷宽度（mm）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  printingWidth: number;
+  @Column()
+  printingWidth: string;
 
   /**
    * 印刷长度（m）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  printingLength: number;
+  @Column()
+  printingLength: string;
 }
 
 class GravurePrintingQuotationHistory {
   /**
    * 材料宽度（mm）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  materialWidth: number;
+  @Column()
+  materialWidth: string;
 
   /**
    * 版长（mm）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  plateLength: number;
+  @Column()
+  plateLength: string;
 
   /**
    * 单袋印刷长/mm
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  printingLengthPerPackage: number;
+  @Column()
+  printingLengthPerPackage: string;
 
   /**
    * 版周/mm
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  platePerimeter: number;
+  @Column()
+  platePerimeter: string;
 
   /**
    * 版费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  plateFee: number;
+  @Column()
+  plateFee: string;
 }
 
 export class NewQuotationHistory {
@@ -176,44 +121,32 @@ export class NewQuotationHistory {
   @Column()
   categoryPrintingTypeId: number;
 
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2
-  })
-  width: number;
+  @Column()
+  width: string;
 
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2
-  })
-  height: number;
+  @Column()
+  height: string;
 
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2
-  })
-  gusset?: number;
+  @Column()
+  gusset?: string;
 
   /**
    * number of SKU
    */
   @Column()
-  numOfStyles: number;
+  numOfStyles: string;
 
   /**
    * quantity of per SKU
    */
   @Column()
-  quantityPerStyle: number;
+  quantityPerStyle: string;
 
   /**
    * total quantity of SKU
    */
   @Column()
-  totalQuantity: number;
+  totalQuantity: string;
 
   @ManyToMany(() => CategorySuboption, categorySuboption => categorySuboption.quotationHistories)
   @JoinTable()
@@ -274,79 +207,44 @@ export class NewQuotationHistory {
   /**
    * 材料面积（㎡）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  materialArea: number;
+  @Column()
+  materialArea: string;
 
   /**
    * 印刷费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  printingCost: number;
+  @Column()
+  printingCost: string;
 
   /**
    * 材料费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 4,
-    nullable: false
-  })
-  materialCost: number;
+  @Column()
+  materialCost: string;
 
   /**
    * 复合费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 6,
-    nullable: false
-  })
-  laminationCost: number;
+  @Column()
+  laminationCost: string;
 
   /**
    * 制袋费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  bagMakingCost: number;
+  @Column()
+  bagMakingCost: string;
 
   /**
    * 刀模费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  dieCuttingCost: number;
+  @Column()
+  dieCuttingCost: string;
 
   /**
    * 包装费（元）
    */
-  @Column({
-    type: "decimal",
-    precision: 10,
-    scale: 2,
-    nullable: false
-  })
-  packagingCost: number;
+  @Column()
+  packagingCost: string;
 
   /**
    * 人工费（元）
