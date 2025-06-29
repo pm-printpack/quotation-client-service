@@ -20,11 +20,15 @@ export class QuotationHistoriesService {
     if (!customer) {
       throw new NotFoundException(`The customer(${createQuotationHistoryDto.customerId}) was not found.`);
     }
-    this.quotationHistoryRepository.insert(
-      this.quotationHistoryRepository.create({
-        customer: customer,
-        ...createQuotationHistoryDto
-      })
-    );
+    // await this.quotationHistoryRepository.insert(
+    //   this.quotationHistoryRepository.create({
+    //     customer: customer,
+    //     ...createQuotationHistoryDto
+    //   })
+    // );
+    await this.quotationHistoryRepository.save({
+      customer: customer,
+      ...createQuotationHistoryDto
+    })
   }
 }

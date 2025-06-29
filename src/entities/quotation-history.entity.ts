@@ -7,108 +7,108 @@ class DigitalPrintingQuotationHistory {
   /**
    * 印刷宽度（mm）
    */
-  @Column()
-  printingWidth: string;
+  @Column({ nullable: true })
+  printingWidth?: string;
 
   /**
    * 横向印刷数
    */
-  @Column()
-  horizontalLayoutCount: string;
+  @Column({ nullable: true })
+  horizontalLayoutCount?: string;
 
   /**
    * 每印袋数
    */
-  @Column()
-  numOfBagsPerImpression: string;
+  @Column({ nullable: true })
+  numOfBagsPerPrinting?: string;
 
   /**
    * 印刷长度（m）
    */
-  @Column()
-  printingLength: string;
+  @Column({ nullable: true })
+  printingLength?: string;
 
   /**
    * 印数
    */
-  @Column()
-  printingQuantity: string;
+  @Column({ nullable: true })
+  printingQuantity?: string;
 }
 
 class OffsetPrintingQuotationHistory {
   /**
    * 匹配模数
    */
-  @Column()
-  numOfMatchedModulus: string;
+  @Column({ nullable: true })
+  numOfMatchedModulus?: string;
 
   /**
    * 匹配周长
    */
-  @Column()
-  matchedPerimeter: string;
+  @Column({ nullable: true })
+  matchedPerimeter?: string;
 
   /**
    * 倍数
    */
-  @Column()
-  multiple: string;
+  @Column({ nullable: true })
+  multiple?: string;
 
   /**
    * 印刷用SKU数
    */
-  @Column()
-  numOfSKUs4Printing: string;
+  @Column({ nullable: true })
+  numOfSKUs4Printing?: string;
 
   /**
    * 材料宽度（mm）
    */
-  @Column()
-  materialWidth: string;
+  @Column({ nullable: true })
+  materialWidth?: string;
 
   /**
    * 印刷宽度（mm）
    */
-  @Column()
-  printingWidth: string;
+  @Column({ nullable: true })
+  printingWidth?: string;
 
   /**
    * 印刷长度（m）
    */
-  @Column()
-  printingLength: string;
+  @Column({ nullable: true })
+  printingLength?: string;
 }
 
 class GravurePrintingQuotationHistory {
   /**
    * 材料宽度（mm）
    */
-  @Column()
-  materialWidth: string;
+  @Column({ nullable: true })
+  materialWidth?: string;
 
   /**
    * 版长（mm）
    */
-  @Column()
-  plateLength: string;
+  @Column({ nullable: true })
+  plateLength?: string;
 
   /**
    * 单袋印刷长/mm
    */
-  @Column()
-  printingLengthPerPackage: string;
+  @Column({ nullable: true })
+  printingLengthPerPackage?: string;
 
   /**
    * 版周/mm
    */
-  @Column()
-  platePerimeter: string;
+  @Column({ nullable: true })
+  platePerimeter?: string;
 
   /**
    * 版费（元）
    */
-  @Column()
-  plateFee: string;
+  @Column({ nullable: true })
+  plateFee?: string;
 }
 
 export class NewQuotationHistory {
@@ -149,11 +149,11 @@ export class NewQuotationHistory {
   totalQuantity: string;
 
   @ManyToMany(() => CategorySuboption, categorySuboption => categorySuboption.quotationHistories)
-  @JoinTable()
+  @JoinTable({ name: "quotation_history_and_category_suboption" })
   categorySuboptions: CategorySuboption[];
 
-  @ManyToMany(() => CategorySuboption, categorySuboption => categorySuboption.quotationHistories)
-  @JoinTable()
+  @ManyToMany(() => Material, material => material.quotationHistories)
+  @JoinTable({ name: "quotation_history_and_material" })
   materials: Material[];
 
   /**
