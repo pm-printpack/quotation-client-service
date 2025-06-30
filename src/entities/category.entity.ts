@@ -202,7 +202,6 @@ export class CategoryAllMapping {
   @JoinColumn({ name: "category_suboption_id" })
   categorySuboption: CategorySuboption;
 
-
   @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.categoryAllMappings)
   quotationHistories: QuotationHistory[];
 }
