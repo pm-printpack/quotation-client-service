@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { QuotationHistory } from "./quotation-history.entity";
 
 class Category{
@@ -157,10 +157,7 @@ export class UnitAreaPriceConfigurableCategory extends Category {
 @Entity({
   name: "category_suboption"
 })
-export class CategorySuboption extends UnitAreaPriceConfigurableCategory {
-  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.categorySuboptions)
-  quotationHistories: QuotationHistory[];
-}
+export class CategorySuboption extends UnitAreaPriceConfigurableCategory {}
 
 @Entity({
   name: "category_all_mapping"
@@ -204,4 +201,8 @@ export class CategoryAllMapping {
   @ManyToOne(() => CategorySuboption)
   @JoinColumn({ name: "category_suboption_id" })
   categorySuboption: CategorySuboption;
+
+
+  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.categoryAllMappings)
+  quotationHistories: QuotationHistory[];
 }

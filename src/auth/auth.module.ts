@@ -9,6 +9,8 @@ import { JwtStrategy } from "./jwt.strategy";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { APP_GUARD } from "@nestjs/core";
 import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Customer } from "../entities/customer.entity";
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { ConfigModule } from "@nestjs/config";
       isGlobal: true,
       envFilePath: [`.env.${process.env.NODE_ENV}.local`, `.env.${process.env.NODE_ENV}`]
     }),
-    CustomersModule,
+    TypeOrmModule.forFeature([Customer]),
     PassportModule,
     JwtModule.register({
       global: true,

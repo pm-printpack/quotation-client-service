@@ -1,9 +1,11 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { CreateQuotationHistoryDto } from "./dto/create-quotation-history.dto";
-import { QuotationHistory } from "src/entities/quotation-history.entity";
+import { QuotationHistory } from "../entities/quotation-history.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { Customer } from "src/entities/customer.entity";
+import { Customer } from "../entities/customer.entity";
+import { CustomersService } from "src/customers/customers.service";
+import { CategoriesService } from "src/categories/categories.service";
 
 @Injectable()
 export class QuotationHistoriesService {
@@ -11,24 +13,22 @@ export class QuotationHistoriesService {
     @InjectRepository(QuotationHistory)
     private quotationHistoryRepository: Repository<QuotationHistory>,
 
-    @InjectRepository(Customer)
-    private customerRepository: Repository<Customer>
+    private customersService: CustomersService,
+
+    private categoriesService: CategoriesService
   ) {}
 
-  async create(createQuotationHistoryDto: CreateQuotationHistoryDto) {
-    const customer: Customer | null =  await this.customerRepository.findOneBy({id: createQuotationHistoryDto.customerId});
+  async create(customerId: number, createQuotationHistoryDtos: CreateQuotationHistoryDto[]) {
+    const customer: Customer | null =  await this.customersService.findOne(customerId);
     if (!customer) {
-      throw new NotFoundException(`The customer(${createQuotationHistoryDto.customerId}) was not found.`);
+      throw new NotFoundException(`The customer(${customerId}) was not found.`);
     }
-    // await this.quotationHistoryRepository.insert(
-    //   this.quotationHistoryRepository.create({
-    //     customer: customer,
-    //     ...createQuotationHistoryDto
-    //   })
-    // );
-    await this.quotationHistoryRepository.save({
+    for (const createQuotationHistoryDto of createQuotationHistoryDtos) {
+      createQuotationHistoryDto.categoryAllMappings = await this.categoriesService.findCategoryAllMappings(createQuotationHistoryDto.categoryAllMappings);
+    }
+    await this.quotationHistoryRepository.save(createQuotationHistoryDtos.map((createQuotationHistoryDto: CreateQuotationHistoryDto) => ({
       customer: customer,
       ...createQuotationHistoryDto
-    })
+    })))
   }
 }

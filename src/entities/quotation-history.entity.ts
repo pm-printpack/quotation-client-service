@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Customer } from "./customer.entity";
-import { CategoryPrintingType, CategoryProductSubcategory, CategorySuboption } from "./category.entity";
+import { CategoryAllMapping, CategoryPrintingType, CategoryProductSubcategory } from "./category.entity";
 import { Material } from "./material.entity";
 
 class DigitalPrintingQuotationHistory {
@@ -148,9 +148,9 @@ export class NewQuotationHistory {
   @Column()
   totalQuantity: string;
 
-  @ManyToMany(() => CategorySuboption, categorySuboption => categorySuboption.quotationHistories)
-  @JoinTable({ name: "quotation_history_and_category_suboption" })
-  categorySuboptions: CategorySuboption[];
+  @ManyToMany(() => CategoryAllMapping, categoryAllMapping => categoryAllMapping.quotationHistories)
+  @JoinTable({ name: "quotation_history_and_category_all_mapping" })
+  categoryAllMappings: CategoryAllMapping[];
 
   @ManyToMany(() => Material, material => material.quotationHistories)
   @JoinTable({ name: "quotation_history_and_material" })

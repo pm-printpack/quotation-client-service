@@ -118,4 +118,11 @@ export class CategoriesService {
     }
     return suboptionsRecord;
   }
+
+  findCategoryAllMappings(categoryAllMappings: Omit<CategoryAllMapping, "id">[]): Promise<CategoryAllMapping[]> {
+    return this.categoryAllMappingRepository
+      .createQueryBuilder("mapping")
+      .where(`(mapping.categoryProductSubcategoryId, mapping.categoryPrintingTypeId, mapping.categoryOptionId, mapping.categorySuboptionId) IN (${categoryAllMappings.map((categoryAllMapping) => `(${categoryAllMapping.categoryProductSubcategoryId},${categoryAllMapping.categoryPrintingTypeId},${categoryAllMapping.categoryOptionId},${categoryAllMapping.categorySuboptionId})`).join(",")})`)
+      .getMany();
+  }
 }

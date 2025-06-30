@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from "@nestjs/common";
+import { Controller, Post, Body, Param, ParseIntPipe } from "@nestjs/common";
 import { QuotationHistoriesService } from "./quotation-histories.service";
 import { CreateQuotationHistoryDto } from "./dto/create-quotation-history.dto";
 
@@ -6,8 +6,8 @@ import { CreateQuotationHistoryDto } from "./dto/create-quotation-history.dto";
 export class QuotationHistoriesController {
   constructor(private readonly quotationHistoriesService: QuotationHistoriesService) {}
 
-  @Post()
-  async create(@Body() createQuotationHistoryDto: CreateQuotationHistoryDto) {
-    await this.quotationHistoriesService.create(createQuotationHistoryDto);
+  @Post("/:customerId")
+  async create(@Param("customerId", ParseIntPipe) customerId: number, @Body() createQuotationHistoryDtos: CreateQuotationHistoryDto[]) {
+    await this.quotationHistoriesService.create(customerId, createQuotationHistoryDtos);
   }
 }

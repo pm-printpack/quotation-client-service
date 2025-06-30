@@ -49,6 +49,6 @@ export class CustomerWithoutPassword {
 
 @Entity()
 export class Customer extends CustomerWithoutPassword {
-  @Column()
+  @Column({ select: false })
   password: string;
 }

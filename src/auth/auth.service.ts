@@ -3,18 +3,24 @@ import { JwtService } from "@nestjs/jwt";
 import { LoginDto } from "./dto/login.dto";
 import { AuthPaylod } from "./auth.type";
 import * as bcrypt from "bcrypt";
-import { CustomersService } from "../customers/customers.service";
 import { Customer } from "../entities/customer.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly customersService: CustomersService,
+    @InjectRepository(Customer)
+    private customerRepository: Repository<Customer>,
     private readonly jwtService: JwtService
   ) {}
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
-    const customer: Customer | null = await this.customersService.findByUsername(loginDto.username);
+    const customer: Customer | null = await this.customerRepository
+      .createQueryBuilder("Customer")
+      .addSelect("Customer.password")
+      .where("Customer.username = :username", { username: loginDto.username })
+      .getOne();
     if (!customer || !(await bcrypt.compare(loginDto.password, customer.password))) {
       throw new UnauthorizedException();
     }
