@@ -58,9 +58,6 @@ export class Material extends UnitAreaPriceConfigurableCategory {
 
   @OneToMany(() => MaterialDisplay, (display: MaterialDisplay) => display.material)
   displays: MaterialDisplay[];
-
-  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.materials)
-  quotationHistories: QuotationHistory[];
 }
 
 @Entity()
@@ -106,4 +103,7 @@ export class MaterialDisplay {
     default: false
   })
   isActive: boolean;
+
+  @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.materialDisplays)
+  quotationHistories: QuotationHistory[];
 }

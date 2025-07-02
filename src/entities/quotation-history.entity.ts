@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Customer } from "./customer.entity";
 import { CategoryAllMapping, CategoryPrintingType, CategoryProductSubcategory } from "./category.entity";
-import { Material } from "./material.entity";
+import { MaterialDisplay } from "./material.entity";
 
 class DigitalPrintingQuotationHistory {
   /**
@@ -152,9 +152,9 @@ export class NewQuotationHistory {
   @JoinTable({ name: "quotation_history_and_category_all_mapping" })
   categoryAllMappings: CategoryAllMapping[];
 
-  @ManyToMany(() => Material, material => material.quotationHistories)
-  @JoinTable({ name: "quotation_history_and_material" })
-  materials: Material[];
+  @ManyToMany(() => MaterialDisplay, materialDisplay => materialDisplay.quotationHistories)
+  @JoinTable({ name: "quotation_history_and_material_display" })
+  materialDisplays: MaterialDisplay[];
 
   /**
    * 成本总价（元）
