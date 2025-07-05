@@ -202,6 +202,12 @@ export class CategoryAllMapping {
   @JoinColumn({ name: "category_suboption_id" })
   categorySuboption: CategorySuboption;
 
+  @Column({
+    type: "boolean",
+    default: false
+  })
+  isVisible: boolean;
+
   @ManyToMany(() => QuotationHistory, quotationHistory => quotationHistory.categoryAllMappings)
   quotationHistories: QuotationHistory[];
 }

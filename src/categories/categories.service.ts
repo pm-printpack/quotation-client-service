@@ -110,11 +110,13 @@ export class CategoriesService {
     // { [optionId]: [CategorySuboption, CategorySuboption, CategorySuboption, ...] }
     const suboptionsRecord: Record<number, CategorySuboption[]> = {};
     for (const mapping of allMappings) {
-      const optionId = mapping.categoryOptionId;
-      if (!suboptionsRecord[optionId]) {
-        suboptionsRecord[optionId] = [];
+      if (mapping.isVisible) {
+        const optionId = mapping.categoryOptionId;
+        if (!suboptionsRecord[optionId]) {
+          suboptionsRecord[optionId] = [];
+        }
+        suboptionsRecord[optionId].push(mapping.categorySuboption);
       }
-      suboptionsRecord[optionId].push(mapping.categorySuboption);
     }
     return suboptionsRecord;
   }
