@@ -10,6 +10,7 @@ import { CategoriesModule } from "./categories/categories.module";
 import { MaterialsModule } from "./materials/materials.module";
 import { ExchangeRatesModule } from "./exchange-rates/exchange-rates.module";
 import { QuotationHistoriesModule } from './quotation-histories/quotation-histories.module';
+import { ShippingsModule } from "./shippings/shippings.module";
 
 @Module({
   imports: [
@@ -54,7 +55,8 @@ import { QuotationHistoriesModule } from './quotation-histories/quotation-histor
     CategoriesModule,
     MaterialsModule,
     ExchangeRatesModule,
-    QuotationHistoriesModule
+    QuotationHistoriesModule,
+    ShippingsModule
   ],
   controllers: [AppController],
   providers: [AppService],
